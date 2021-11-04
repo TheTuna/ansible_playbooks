@@ -1,0 +1,14 @@
+---
+- name: check if user exist and register a variable
+  command:
+    cmd: "id -u {{ username }}"
+  ignore_errors: yes
+  register: user_check
+- name: Create dest directory
+  file:
+    path: "{{ base_path }}/{{ item }}"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  loop:
+    - prometheus

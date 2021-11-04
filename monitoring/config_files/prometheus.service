@@ -7,9 +7,9 @@ After=network-online.target
 User=monitoring
 Restart=on-failure
 
-ExecStart=<path_to_prometheus_dir>/prometheus \
-  --config.file=<path_to_prometheus_dir>/prometheus.yml \
-  --storage.tsdb.path=<path_to_prometheus_dir>/data
+ExecStart=path_to_prometheus/prometheus \
+  --config.file=path_to_prometheus/prometheus.yml \
+  --storage.tsdb.path=path_to_prometheus/data
 
 [Install]
 WantedBy=multi-user.target

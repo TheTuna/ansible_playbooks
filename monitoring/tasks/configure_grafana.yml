@@ -1,0 +1,5 @@
+---
+- name: Install grafana
+  apt:
+    name: grafana
+    state: present

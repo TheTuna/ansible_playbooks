@@ -1,0 +1,27 @@
+---
+- name: Download package
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ base_path }}/{{ item.dest }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  loop:
+    - { url: "https://github.com/prometheus/prometheus/releases/download/v2.30.0/prometheus-2.30.0.linux-armv7.tar.gz", dest: "prometheus"}
+
+- name: Unarchive prometheus
+  unarchive:
+    # remove subdir and package var as grafana is installed via deb
+    src: "{{ base_path }}/{{ item.subdir }}/{{ item.package }}"
+    dest: "{{ base_path }}/{{ item.subdir }}"
+    remote_src: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "755"
+  loop:
+    - { subdir: "prometheus", package: "package_name"}
+
+- name: Copy prometheus service file
+  copy:
+    src: prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+  notify: start services
